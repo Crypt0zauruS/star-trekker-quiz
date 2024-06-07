@@ -1,11 +1,12 @@
 const ContentSecurityPolicy = `
   default-src 'self' vercel.live;
   script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.vercel-insights.com vercel.live;
-  style-src 'self' 'unsafe-inline' cdnjs.cloudflare.com;
+  style-src 'self' 'unsafe-inline' cdnjs.cloudflare.com googleapis.com fonts.googleapis.com;
   media-src 'none';
-  connect-src *  verify.walletconnect.com explorer-api.walletconnect.com relay.walletconnect.com;
-  font-src 'self';
-  frame-src 'self' m.youtube.com verify.walletconnect.com explorer-api.walletconnect.com relay.walletconnect.com;
+  img-src * data: cdn.vercel-insights.com vercel.live cdnjs.cloudflare.com *.walletconnect.com *.walletconnect.org;
+  connect-src * *.walletconnect.com *.walletconnect.org;
+  font-src 'self' fonts.gstatic.com;
+  frame-src * *.walletconnect.com *.walletconnect.org;
 `.replace(/\n/g, "");
 
 const securityHeaders = [
@@ -20,7 +21,7 @@ const securityHeaders = [
   },
   {
     key: "Permissions-Policy",
-    value: "camera=(*), microphone=(), geolocation=(*), interest-cohort=()",
+    value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
   },
 ];
 
@@ -31,11 +32,7 @@ const nextConfig = {
     locales: ["en"],
     defaultLocale: "en",
   },
-  async rewrites() {
-    return {
-      fallback: [{ source: "/api/:path*", destination: "/404" }],
-    };
-  },
+
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
   },

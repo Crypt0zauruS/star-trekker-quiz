@@ -21,7 +21,12 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     async function fetchConfig() {
-      const res = await fetch("/api/config");
+      const res = await fetch("/api/config", {
+        method: "POST", 
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       const data = await res.json();
 
       const wagmiConfig = getDefaultConfig({
