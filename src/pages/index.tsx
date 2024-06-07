@@ -147,107 +147,51 @@ const Login: React.FC<LoginProps> = ({ config }) => {
   return (
     <div className="signUpLoginBox">
       <Header />
-      <div className="slContainer">
-        <div className="formBoxLeftLogin"></div>
-        <div className="formBoxRight">
-          {!paused ? (
-            <>
-              <div className="formContent">
-                {error !== "" && (
-                  <span className="animate__animated animate__zoomInLeft">
-                    {error}
-                  </span>
-                )}
+      <main>
+        <div className="slContainer">
+          <div className="formBoxLeftLogin"></div>
+          <div className="formBoxRight">
+            {!paused ? (
+              <>
+                <div className="formContent">
+                  {error !== "" && (
+                    <span className="animate__animated animate__zoomInLeft">
+                      {error}
+                    </span>
+                  )}
 
-                {!loader ? (
-                  <h2>Status: {status} </h2>
-                ) : (
-                  <>
-                    <Loader loadingMsg={undefined} styling={undefined} />
-                  </>
-                )}
-                <hr />
+                  {!loader ? (
+                    <h2>Status: {status} </h2>
+                  ) : (
+                    <>
+                      <Loader loadingMsg={undefined} styling={undefined} />
+                    </>
+                  )}
+                  <hr />
 
-                {!loading ? (
-                  userSession && (
-                    <div>
-                      <h2>Account: {userSession}</h2>
-                      {remainingAddresses !== undefined &&
-                        remainingAddresses > 0 && (
-                          <h2 style={{ fontSize: "1.5rem" }}>
-                            {remainingAddresses} spot
-                            {remainingAddresses > 1 ? "s" : ""} left on{" "}
-                            {maxAddressesWhitelisted}
-                          </h2>
-                        )}
+                  {!loading ? (
+                    userSession && (
+                      <div>
+                        <h2>Account: {userSession}</h2>
+                        {remainingAddresses !== undefined &&
+                          remainingAddresses > 0 && (
+                            <h2 style={{ fontSize: "1.5rem" }}>
+                              {remainingAddresses} spot
+                              {remainingAddresses > 1 ? "s" : ""} left on{" "}
+                              {maxAddressesWhitelisted}
+                            </h2>
+                          )}
 
-                      {isQuizWhitelisted ? (
-                        <div className="rules">
-                          <div>
-                            <p>
-                              Congratulations for succeeding in this Quiz ! You
-                              are now part of the WhiteList !
-                            </p>
-                            <hr />
-                            {disengageButton()}
-                          </div>
-                          <Image
-                            src={queen}
-                            width={200}
-                            height={200}
-                            className="picture"
-                            alt="queen"
-                          />
-                        </div>
-                      ) : isUmbrellaWhitelisted ? (
-                        <div className="rules">
-                          <div>
-                            <p>
-                              You are already part of the WhiteList, Thanks for
-                              participation in UmbrellaCorp Academy !
-                            </p>
-                            <hr />
-                            {disengageButton()}
-                          </div>
-                          <Image
-                            src={queen}
-                            width={200}
-                            height={200}
-                            className="picture"
-                            alt="queen"
-                          />
-                        </div>
-                      ) : remainingAddresses && remainingAddresses > 0 ? (
-                        <form
-                          className="inputBox"
-                          onSubmit={
-                            handleSubmit as MouseEventHandler<HTMLFormElement>
-                          }
-                        >
-                          <input
-                            type="text"
-                            placeholder="Nickname 4 - 20 alphanumeric characters"
-                            pattern="[a-zA-Z\d]{4,20}"
-                            onChange={(e) => setUserData(e.target.value)}
-                            value={userData}
-                            autoFocus
-                            required
-                          />
+                        {isQuizWhitelisted ? (
                           <div className="rules">
-                            <p>
-                              Welcome to the Star Trekker Quizz ! <br />
-                              <br />
-                              There are 3 levels, each level has 10 questions.{" "}
-                              <br />
-                              ALL the 30 answers MUST be correct to win a chance
-                              to join the WhiteList ! <br />
-                              <br />
-                              Warning ! Changing account, network, refreshing,
-                              back to login page or Logout during the quizz will
-                              reset your progression ! <br />
-                              <br />
-                              GOOD LUCK !
-                            </p>
+                            <div>
+                              <p>
+                                Congratulations for succeeding in this Quiz !
+                                You are now part of the WhiteList !
+                              </p>
+                              <hr />
+                              {disengageButton()}
+                            </div>
                             <Image
                               src={queen}
                               width={200}
@@ -256,81 +200,142 @@ const Login: React.FC<LoginProps> = ({ config }) => {
                               alt="queen"
                             />
                           </div>
-                          <hr />
-                          <button
-                            className="btnSubmit"
-                            type="submit"
-                            disabled={
-                              isQuizWhitelisted ||
-                              isUmbrellaWhitelisted ||
-                              remainingAddresses === 0
+                        ) : isUmbrellaWhitelisted ? (
+                          <div className="rules">
+                            <div>
+                              <p>
+                                You are already part of the WhiteList, Thanks
+                                for participation in UmbrellaCorp Academy !
+                              </p>
+                              <hr />
+                              {disengageButton()}
+                            </div>
+                            <Image
+                              src={queen}
+                              width={200}
+                              height={200}
+                              className="picture"
+                              alt="queen"
+                            />
+                          </div>
+                        ) : remainingAddresses && remainingAddresses > 0 ? (
+                          <form
+                            className="inputBox"
+                            onSubmit={
+                              handleSubmit as MouseEventHandler<HTMLFormElement>
                             }
                           >
-                            Start the Quizz !
-                          </button>
-                          {disengageButton()}
-                        </form>
-                      ) : typeof remainingAddresses === "number" &&
-                        remainingAddresses === 0 ? (
-                        <div className="rules">
-                          <div>
-                            <p>
-                              The WhiteList is full,{" "}
-                              {isQuizWhitelisted || isUmbrellaWhitelisted
-                                ? " but you are already part of the WhiteList !"
-                                : " you can't participate anymore."}
-                            </p>{" "}
+                            <input
+                              type="text"
+                              placeholder="Nickname 4 - 20 alphanumeric characters"
+                              pattern="[a-zA-Z\d]{4,20}"
+                              onChange={(e) => setUserData(e.target.value)}
+                              value={userData}
+                              autoFocus
+                              required
+                            />
+                            <div className="rules">
+                              <p>
+                                Welcome to the Star Trekker Quizz ! <br />
+                                <br />
+                                There are 3 levels, each level has 10 questions.{" "}
+                                <br />
+                                ALL the 30 answers MUST be correct to win a
+                                chance to join the WhiteList ! <br />
+                                <br />
+                                Warning ! Changing account, network, refreshing,
+                                back to login page or Logout during the quizz
+                                will reset your progression ! <br />
+                                <br />
+                                GOOD LUCK !
+                              </p>
+                              <Image
+                                src={queen}
+                                width={200}
+                                height={200}
+                                className="picture"
+                                alt="queen"
+                              />
+                            </div>
                             <hr />
+                            <button
+                              className="btnSubmit"
+                              type="submit"
+                              disabled={
+                                isQuizWhitelisted ||
+                                isUmbrellaWhitelisted ||
+                                remainingAddresses === 0 ||
+                                paused
+                              }
+                            >
+                              Start the Quizz !
+                            </button>
                             {disengageButton()}
+                          </form>
+                        ) : typeof remainingAddresses === "number" &&
+                          remainingAddresses === 0 ? (
+                          <div className="rules">
+                            <div>
+                              <p>
+                                The WhiteList is full,{" "}
+                                {isQuizWhitelisted || isUmbrellaWhitelisted
+                                  ? " but you are already part of the WhiteList !"
+                                  : " you can't participate anymore."}
+                              </p>{" "}
+                              <hr />
+                              {disengageButton()}
+                            </div>
+                            <Image
+                              src={queen}
+                              width={200}
+                              height={200}
+                              className="picture"
+                              alt="queen"
+                            />
                           </div>
-                          <Image
-                            src={queen}
-                            width={200}
-                            height={200}
-                            className="picture"
-                            alt="queen"
-                          />
-                        </div>
-                      ) : undefined}
-                    </div>
-                  )
-                ) : loading ? (
-                  <Loader loadingMsg={undefined} styling={undefined} />
-                ) : undefined}
+                        ) : undefined}
+                      </div>
+                    )
+                  ) : loading ? (
+                    <Loader loadingMsg={undefined} styling={undefined} />
+                  ) : undefined}
 
-                {btn && (
-                  <ConnectButton.Custom>
-                    {({ openConnectModal }) => (
-                      <button
-                        className="btnSubmit"
-                        onClick={openConnectModal}
-                        disabled={paused}
-                      >
-                        Connect Wallet
-                      </button>
-                    )}
-                  </ConnectButton.Custom>
-                )}
+                  {btn && (
+                    <ConnectButton.Custom>
+                      {({ openConnectModal }) => (
+                        <button
+                          className="btnSubmit"
+                          onClick={openConnectModal}
+                          disabled={paused}
+                        >
+                          Connect Wallet
+                        </button>
+                      )}
+                    </ConnectButton.Custom>
+                  )}
+                </div>
+              </>
+            ) : (
+              <div className="formContent">
+                <h2>Status: {status} </h2>
+                <div className="rules">
+                  <p>
+                    Don't be so pressed to be assimilated ! Wait patiently...
+                  </p>{" "}
+                  <Image
+                    src={queen}
+                    width={200}
+                    height={200}
+                    className="picture"
+                    alt="queen"
+                  />
+                </div>
               </div>
-            </>
-          ) : (
-            <div className="formContent">
-              <h2>Status: {status} </h2>
-              <div className="rules">
-                <p>Don't be so pressed to be assimilated ! Wait patiently...</p>{" "}
-                <Image
-                  src={queen}
-                  width={200}
-                  height={200}
-                  className="picture"
-                  alt="queen"
-                />
-              </div>
-            </div>
-          )}
-          <Footer />
+            )}
+          </div>
         </div>
-      </div>
+      </main>
+      <Footer />
     </div>
   );
 };
